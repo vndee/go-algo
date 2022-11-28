@@ -16,9 +16,67 @@ import (
  * The function accepts INTEGER_ARRAY arr as parameter.
  */
 
+func swap(x, y *int32) {
+	*x, *y = *y, *x
+}
+
+func merge(arr []int32) ([]int32, int64) {
+	if len(arr) == 1 {
+		return arr, 0
+	}
+
+	if len(arr) == 2 {
+		if arr[0] > arr[1] {
+			swap(&arr[0], &arr[1])
+			return arr, 1
+		} else {
+			return arr, 0
+		}
+	}
+
+	m := len(arr) >> 1
+
+	left, cLeft := merge(arr[0 : m+1])
+	right, cRight := merge(arr[m+1 : len(arr)])
+
+	var cMerge int64 = 0
+	var newArr = make([]int32, len(left)+len(right))
+
+	var c, l, r int = 0, 0, 0
+
+	for l < len(left) && r < len(right) {
+		if left[l] <= right[r] {
+			newArr[c] = left[l]
+			l++
+		} else {
+			newArr[c] = right[r]
+			r++
+
+			cMerge += int64(len(left) - l)
+		}
+
+		c++
+	}
+
+	for l < len(left) {
+		newArr[c] = left[l]
+		c++
+		l++
+	}
+
+	for r < len(right) {
+		newArr[c] = right[r]
+		c++
+		r++
+	}
+
+	ans := cMerge + cLeft + cRight
+	return newArr, ans
+}
+
 func countInversions(arr []int32) int64 {
 	// Write your code here
-	var ans int64 = 0
+	_, ans := merge(arr)
 	return ans
 }
 
