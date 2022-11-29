@@ -22,8 +22,6 @@ func minTime(machines []int64, goal int64) int64 {
 			producedItems += int64(m / machine)
 		}
 
-		fmt.Println(l, r, m, producedItems)
-
 		if producedItems >= goal {
 			r = m
 		} else {
