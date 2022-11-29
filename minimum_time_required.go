@@ -11,7 +11,7 @@ import (
 
 // Complete the minTime function below.
 func minTime(machines []int64, goal int64) int64 {
-	var l, r, m int64 = 0, int64(1e18), int64(0)
+	var l, r, m int64 = 0, int64(1e13), int64(0)
 
 	for l < r {
 		m = (l + r) >> 1
