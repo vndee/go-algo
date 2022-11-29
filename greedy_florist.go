@@ -19,18 +19,19 @@ func getMinimumCost(k int32, c []int32) int32 {
 	for i := 1; i < len(c); i++ {
 		sum = append(sum, sum[i-1]+c[i])
 	}
-	fmt.Println(c)
-	fmt.Println(sum)
 
-	var j int32 = 0
-	var ans int32 = 0
-	for j+k < int32(len(c)) {
+	var j, ans, n int32 = 0, 0, int32(len(c))
+	for j+k <= n {
 		if j != 0 {
-			ans += (j / k)(sum[j+k-1] - sum[j-1])
+			ans += (1 + (j / k)) * (sum[j+k-1] - sum[j-1])
 		} else {
 			ans += sum[j+k-1]
 		}
 		j += k
+	}
+
+	if j < n {
+		ans += (1 + (j / k)) * (sum[n-1] - sum[j-1])
 	}
 	return ans
 }
